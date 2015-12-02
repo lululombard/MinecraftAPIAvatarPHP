@@ -4,6 +4,7 @@ A simple PHP API with caching.
 Supports 1.8 skins (Steve and Alex)
 
 Without URL rewriting : `<domain>/?u=<username>` or `<domain>/?u=<username>&s=<size>`
+
 With URL rewriting (htaccess) : `<domain>/<username>` or `<domain>/<username>/<size>`
 
 Example : `http://<domain>/lululombard/120`
