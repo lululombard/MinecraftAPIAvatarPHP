@@ -3,6 +3,8 @@ A simple PHP API with caching.
 
 Supports 1.8 skins (Steve and Alex)
 
+.htaccess is provided for (optionnal) URL rewriting on apache2 (`mod_rewrite` must be enabled via the command `a2enmod rewrite`)
+
 ## Full skin
 
 Without URL rewriting : `<domain>/?u=<username>` or `<domain>/?u=<username>&s=<size>`
@@ -22,6 +24,8 @@ With URL rewriting (htaccess) : `<domain>/face/<username>` or `<domain>/face/<us
 Example : `http://<domain>/face/lululombard/120`
 
 ![alt tag](http://skins.kingdomhills.fr/face/lululombard/120)
+
+## More info
 
 Folder "cache_skins" will automaticaly be created and will store avatars to cache them for one hour.
 
