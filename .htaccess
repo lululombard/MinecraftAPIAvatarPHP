@@ -1,3 +1,8 @@
 RewriteEngine On
-RewriteRule ^([A-Za-z0-9_]+)/?$ ?u=$1 [NC,L]
-RewriteRule ^([A-Za-z0-9_]+)/([0-9]+)/?$ ?u=$1&s=$2 [NC,L]
+RewriteRule ^([A-Za-z0-9_]+)/?$ index.php?u=$1 [NC,L]
+RewriteRule ^([A-Za-z0-9_]+)/([0-9]+)/?$ index.php?u=$1&s=$2 [NC,L]
+RewriteRule ^avatar/([A-Za-z0-9_]+)/?$indexn.php?u=$1 [NC,L]
+RewriteRule ^avatar/([A-Za-z0-9_]+)/([0-9]+)/?$ index.php?u=$1&s=$2 [NC,L]
+RewriteRule ^face/([A-Za-z0-9_]+)/?$ face.php?u=$1 [NC,L]
+RewriteRule ^face/([A-Za-z0-9_]+)/([0-9]+)/?$ face.php?u=$1&s=$2 [NC,L]
+RewriteRule ^raw/([A-Za-z0-9_]+)/?$ common.php?raw=$1 [NC,L]
