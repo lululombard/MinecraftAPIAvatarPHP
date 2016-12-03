@@ -13,7 +13,7 @@ With URL rewriting (htaccess) : `<domain>/<username>` or `<domain>/<username>/<s
 
 Example : `http://<domain>/lululombard/120`
 
-![alt tag](http://skins.kingdomhills.fr/lululombard/120)
+![Example skin](http://skins.kingdomhills.fr/lululombard/120)
 
 ## Only head with helm
 
@@ -23,7 +23,17 @@ With URL rewriting (htaccess) : `<domain>/face/<username>` or `<domain>/face/<us
 
 Example : `http://<domain>/face/lululombard/120`
 
-![alt tag](http://skins.kingdomhills.fr/face/lululombard/120)
+![Example skin](http://skins.kingdomhills.fr/face/lululombard/120)
+
+## Raw skin
+
+Without URL rewriting : `<domain>/common.php?raw=<username>`
+
+With URL rewriting (htaccess) : `<domain>/raw/<username>`
+
+Example : `http://<domain>/raw/lululombard`
+
+![Example skin](http://skins.kingdomhills.fr/face/lululombard/120)
 
 ## More info
 
