@@ -31,7 +31,7 @@ Without URL rewriting : `<domain>/common.php?raw=<username>`
 
 With URL rewriting (htaccess) : `<domain>/raw/<username>`
 
-![Example skin](http://skins.kingdomhills.fr/raw/lululombard/120)
+![Example skin](http://skins.kingdomhills.fr/raw/lululombard)
 
 ## More info
 
