@@ -42,6 +42,7 @@ if (isset($_GET['raw'])) {
 	$user = isset($_GET['raw']) ? preg_replace("/[^a-zA-Z0-9_]+/", "",$_GET['raw']) : '';
 	$im = get_skin($user);
 	header('Content-type: image/png');
+	imagecolortransparent($im, imagecolorat($im, 63, 0));
 	imagepng($im);
 	imagedestroy($im);
 }
