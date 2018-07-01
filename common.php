@@ -12,25 +12,51 @@ function get_skin($user) {
 		if (file_exists($filename) && ((filemtime($filename)+3600) > time())) {
 			$output = imagecreatefromstring(file_get_contents($filename));
 		}
-		$ch = curl_init('http://skins.minecraft.net/MinecraftSkins/' . $user . '.png');
-		curl_setopt($ch, CURLOPT_HEADER, 1);
-		curl_setopt($ch, CURLOPT_NOBODY, 1);
-		curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		$ch = curl_init('https://api.mojang.com/users/profiles/minecraft/' . $user);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		$result = curl_exec($ch);
 		$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		if ($status == 301) {
-			preg_match('/location:(.*)/i', $result, $matches);
-			curl_setopt($ch, CURLOPT_URL, trim($matches[1]));
-			curl_setopt($ch, CURLOPT_HEADER, 0);
-			curl_setopt($ch, CURLOPT_NOBODY, 0);
-			$result = curl_exec($ch);
-			$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-			if ($status == 200) {
-				file_put_contents($filename, $result);
-				$output = imagecreatefromstring($result);
+		if ($status == 200) {
+			$json = json_decode($result, true);
+			if (isset($json['id'])) {
+				$uuid = $json['id'];
+				curl_setopt($ch, CURLOPT_URL, 'https://sessionserver.mojang.com/session/minecraft/profile/' . $uuid);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				$result = curl_exec($ch);
+				$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+				if ($status == 200) {
+					$json = json_decode($result, true);
+					if (isset($json['properties'])) {
+						$properties = $json['properties'];
+						foreach ($properties as $property) {
+							if (isset($property['name']) && $property['name'] == 'textures') {
+								$texture = json_decode(base64_decode($property['value']), true);
+								if (isset($texture['textures']['SKIN']['url'])) {
+									$skinurl = $texture['textures']['SKIN']['url'];
+									curl_setopt($ch, CURLOPT_URL, $skinurl);
+									curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+									curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+									$result = curl_exec($ch);
+									$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+									if ($status == 200) {
+										file_put_contents($filename, $result);
+										$output = imagecreatefromstring($result);
+										return $output;
+									}
+									else if (file_exists($filename)) $output = imagecreatefromstring(file_get_contents($filename));
+								}
+								else if (file_exists($filename)) $output = imagecreatefromstring(file_get_contents($filename));
+							}
+						}
+						if (file_exists($filename)) $output = imagecreatefromstring(file_get_contents($filename));
+					}
+					else if (file_exists($filename)) $output = imagecreatefromstring(file_get_contents($filename));
+				}
+				else if (file_exists($filename)) $output = imagecreatefromstring(file_get_contents($filename));
 			}
-			else if (file_exists($filename)) $output = imagecreatefromstring(file_get_contents($filename));
+			else if (file_exists($filename)) $output = imagecreatefromstring(file_get_contents($filename));	
 		}
 		else if (file_exists($filename)) $output = imagecreatefromstring(file_get_contents($filename));
 		curl_close($ch);
